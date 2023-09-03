@@ -3,13 +3,25 @@ import Form from "antd/es/form";
 import Input from "antd/es/input";
 import Modal, { ModalProps } from "antd/es/modal";
 import Select from "antd/es/select";
+import { InfoCircleOutlined } from "@ant-design/icons";
 import { FormItem } from "common";
 import { SubmitButton } from "./TrainerRegistrationModal.styles";
 
 type Props = ModalProps & {};
 
 const TrainerRegistrationModal: React.FC<Props> = ({ ...modalProps }) => {
-  const rankOptions: { label: string; value: string }[] = [
+  const genderOptions: Options[] = [
+    {
+      label: "Male",
+      value: "Male",
+    },
+    {
+      label: "Female",
+      value: "Female",
+    },
+  ];
+
+  const rankOptions: Options[] = [
     {
       label: "Beginner",
       value: "Beginner",
@@ -42,7 +54,7 @@ const TrainerRegistrationModal: React.FC<Props> = ({ ...modalProps }) => {
     <Modal
       destroyOnClose={true}
       footer={null}
-      title="Trainer Registration"
+      title="Trainer's Registration"
       {...modalProps}
     >
       <Form layout="vertical" onFinish={onFinish}>
@@ -54,9 +66,21 @@ const TrainerRegistrationModal: React.FC<Props> = ({ ...modalProps }) => {
           <Input />
         </FormItem>
         <FormItem
+          label="Gender"
+          name="gender"
+          rules={[{ required: true, message: "Please select your gender." }]}
+        >
+          <Select options={genderOptions} />
+        </FormItem>
+        <FormItem
           label="Rank"
           name="rank"
           rules={[{ required: true, message: "Please select your rank." }]}
+          tooltip={{
+            icon: <InfoCircleOutlined />,
+            title:
+              "Ranking list (from left to right, left is the starting rank): Beginner > Great > Expert > Veteran > Ultra > Master",
+          }}
         >
           <Select options={rankOptions} />
         </FormItem>

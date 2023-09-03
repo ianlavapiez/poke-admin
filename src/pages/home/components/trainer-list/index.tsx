@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import Table from "antd/es/table";
 import type { ColumnsType } from "antd/es/table";
 import { TrainerListContainer } from "./TrainerList.styles";
+import { RankTag } from "common";
 
 type Props = {};
 
@@ -21,6 +22,7 @@ const TrainerList: React.FC<Props> = () => {
       dataIndex: "rank",
       key: "rank",
       title: "Rank",
+      render: (rank: Rankings) => <RankTag rank={rank}>{rank}</RankTag>,
     },
   ];
 
@@ -28,23 +30,23 @@ const TrainerList: React.FC<Props> = () => {
     {
       id: 1,
       name: "Ash Ketchum",
-      rank: 1,
+      rank: "Master",
     },
     {
       id: 2,
       name: "Brock",
-      rank: 2,
+      rank: "Veteran",
     },
     {
       id: 3,
       name: "Misty",
-      rank: 3,
+      rank: "Beginner",
     },
   ];
 
   return (
     <TrainerListContainer>
-      <Table columns={columns} dataSource={sampleTrainerData} />
+      <Table columns={columns} dataSource={sampleTrainerData} rowKey="id" />
     </TrainerListContainer>
   );
 };

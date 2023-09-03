@@ -14,7 +14,7 @@ const HomePage: React.FC<Props> = () => {
       <ControlsWrapper>
         <Button>Start Tournament</Button>
         <Button onClick={setBoolToTrue} type="primary">
-          Trainer Registration
+          Trainer's Registration
         </Button>
       </ControlsWrapper>
       <TrainerList />

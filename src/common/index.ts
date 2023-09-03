@@ -1,4 +1,5 @@
 import FormItem from "./form-item";
+import RankTag from "./rank-tag";
 import Spinner from "./spinner";
 
-export { FormItem, Spinner };
+export { FormItem, RankTag, Spinner };
