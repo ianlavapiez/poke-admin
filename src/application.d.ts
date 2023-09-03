@@ -1,3 +1,7 @@
+type ApplicationState = {
+  trainers: Trainer[];
+};
+
 type Options = {
   label: string;
   value: string;
@@ -27,10 +31,11 @@ type PokemonResults = {
 type PokemonRegistration = Pick<Pokemon, "id", "name">;
 
 type Trainer = {
-  id: number;
+  id: string;
   gender: string;
   name: string;
   rank: Rankings;
+  pokemon: Pokemon[];
 };
 
 type Rankings =
@@ -40,5 +45,5 @@ type Rankings =
   | "Veteran"
   | "Ultra"
   | "Master";
-type TrainerRegistration = Pick<Trainer, "gender" | "name" | "rank">;
 type TrainerTable = Pick<Trainer, "id" | "name" | "rank">;
+type TrainerWithoutIdAndPokemon = Omit<Trainer, "id" | "pokemon">;

@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { Spinner } from "common";
 import { HomePage, TrainerPage } from "pages";
 import GlobalStyle from "./global.styles";
+import { TrainerProvider } from "contexts/Context";
 
 type Props = {};
 
@@ -11,10 +12,12 @@ const App: React.FC<Props> = () => {
     <Fragment>
       <GlobalStyle />
       <Suspense fallback={<Spinner />}>
-        <Routes>
-          <Route element={<HomePage />} path="/" />
-          <Route element={<TrainerPage />} path="/trainer/:id" />
-        </Routes>
+        <TrainerProvider>
+          <Routes>
+            <Route element={<HomePage />} path="/" />
+            <Route element={<TrainerPage />} path="/trainer/:id" />
+          </Routes>
+        </TrainerProvider>
       </Suspense>
     </Fragment>
   );

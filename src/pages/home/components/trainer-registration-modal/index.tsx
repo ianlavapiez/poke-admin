@@ -5,11 +5,14 @@ import Modal, { ModalProps } from "antd/es/modal";
 import Select from "antd/es/select";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { FormItem } from "common";
+import { useActionContext } from "contexts/Context";
 import { SubmitButton } from "./TrainerRegistrationModal.styles";
 
 type Props = ModalProps & {};
 
 const TrainerRegistrationModal: React.FC<Props> = ({ ...modalProps }) => {
+  const { dispatch } = useActionContext();
+
   const genderOptions: Options[] = [
     {
       label: "Male",
@@ -48,7 +51,16 @@ const TrainerRegistrationModal: React.FC<Props> = ({ ...modalProps }) => {
     },
   ];
 
-  const onFinish = (values: TrainerRegistration) => {};
+  const onFinish = (values: TrainerWithoutIdAndPokemon) => {
+    dispatch({
+      type: "CREATE_TRAINER",
+      payload: {
+        data: {
+          ...values,
+        },
+      },
+    });
+  };
 
   return (
     <Modal

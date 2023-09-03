@@ -4,13 +4,15 @@ import Table from "antd/es/table";
 import type { ColumnsType } from "antd/es/table";
 import { TrainerListContainer } from "./TrainerList.styles";
 import { RankTag } from "common";
+import { useContext } from "contexts/Context";
 
 type Props = {};
 
 const TrainerList: React.FC<Props> = () => {
   const navigate = useNavigate();
+  const { trainers } = useContext();
 
-  const columns: ColumnsType<TrainerTable> = [
+  const columns: ColumnsType<Trainer> = [
     {
       dataIndex: "id",
       key: "id",
@@ -29,29 +31,11 @@ const TrainerList: React.FC<Props> = () => {
     },
   ];
 
-  const sampleTrainerData: TrainerTable[] = [
-    {
-      id: 1,
-      name: "Ash Ketchum",
-      rank: "Master",
-    },
-    {
-      id: 2,
-      name: "Brock",
-      rank: "Veteran",
-    },
-    {
-      id: 3,
-      name: "Misty",
-      rank: "Beginner",
-    },
-  ];
-
   return (
     <TrainerListContainer>
       <Table
         columns={columns}
-        dataSource={sampleTrainerData}
+        dataSource={trainers}
         onRow={({ id }) => {
           return {
             style: {
