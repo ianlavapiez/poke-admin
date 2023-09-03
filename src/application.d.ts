@@ -12,6 +12,18 @@ type Pokemon = {
   weight: number;
 };
 
+type PokemonList = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: PokemonResults[];
+};
+
+type PokemonResults = {
+  name: string;
+  url: string;
+};
+
 type PokemonRegistration = Pick<Pokemon, "id", "name">;
 
 type Trainer = {
