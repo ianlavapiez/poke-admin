@@ -1,8 +1,8 @@
 import React, { Fragment, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Spinner } from "common";
-import GlobalStyle from "./global.styles";
 import { HomePage } from "pages";
+import GlobalStyle from "./global.styles";
 
 type Props = {};
 

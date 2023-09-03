@@ -1,3 +1,4 @@
+import FormItem from "./form-item";
 import Spinner from "./spinner";
 
-export { Spinner };
+export { FormItem, Spinner };
