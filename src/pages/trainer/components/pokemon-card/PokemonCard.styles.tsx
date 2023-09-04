@@ -23,9 +23,13 @@ export const AvatarWrapper = styled.div`
 `;
 
 export const Count = styled.h3`
-  font-size: 32px;
+  font-size: 25px;
   color: white;
   line-height: 30px;
+
+  @media (min-width: ${(props) => props.theme.tabletSize}) {
+    font-size: 32px;
+  }
 `;
 
 export const ColumnWrapper = styled.div`
@@ -35,13 +39,23 @@ export const ColumnWrapper = styled.div`
   align-items: center;
 `;
 
+export const InfoWrapper = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
 export const Name = styled.h3`
-  font-size: 32px;
+  font-size: 28px;
   color: white;
   line-height: 30px;
   text-align: center;
   text-transform: capitalize;
   width: 200px;
+  margin-bottom: 10px;
+
+  @media (min-width: ${(props) => props.theme.tabletSize}) {
+    font-size: 32px;
+  }
 `;
 
 export const NameWrapper = styled.div`
@@ -55,7 +69,9 @@ export const NameWrapper = styled.div`
 export const PokemonCardContainer = styled.div`
   width: auto;
   display: flex;
-  padding: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 30px;
   border: 1px solid white;
   border-radius: 8px;
   margin: 10px 0;
@@ -63,8 +79,12 @@ export const PokemonCardContainer = styled.div`
 `;
 
 export const Title = styled.h3`
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 700;
   color: gold;
   text-align: center;
+
+  @media (min-width: ${(props) => props.theme.tabletSize}) {
+    font-size: 16px;
+  }
 `;

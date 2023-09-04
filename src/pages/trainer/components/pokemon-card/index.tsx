@@ -10,6 +10,7 @@ import {
   AvatarWrapper,
   ColumnWrapper,
   Count,
+  InfoWrapper,
   Name,
   NameWrapper,
   PokemonCardContainer,
@@ -79,22 +80,24 @@ const PokemonCard: React.FC<Props> = ({ open, openMessage, pokemon }) => {
         <Name>{name}</Name>
         <Title>Pokémon Name</Title>
       </NameWrapper>
-      <ColumnWrapper>
-        <Count>{order}</Count>
-        <Title>Order</Title>
-      </ColumnWrapper>
-      <ColumnWrapper>
-        <Count>{base_experience}</Count>
-        <Title>Base Exp</Title>
-      </ColumnWrapper>
-      <ColumnWrapper>
-        <Count>{weight}</Count>
-        <Title>Weight</Title>
-      </ColumnWrapper>
-      <ColumnWrapper>
-        <Count>{height}</Count>
-        <Title>Height</Title>
-      </ColumnWrapper>
+      <InfoWrapper>
+        <ColumnWrapper>
+          <Count>{order}</Count>
+          <Title>Order</Title>
+        </ColumnWrapper>
+        <ColumnWrapper>
+          <Count>{base_experience}</Count>
+          <Title>Base Exp</Title>
+        </ColumnWrapper>
+        <ColumnWrapper>
+          <Count>{weight}</Count>
+          <Title>Weight</Title>
+        </ColumnWrapper>
+        <ColumnWrapper>
+          <Count>{height}</Count>
+          <Title>Height</Title>
+        </ColumnWrapper>
+      </InfoWrapper>
       <ActionsWrapper>
         <Button
           onClick={openPokemonModalWithId}

@@ -21,7 +21,7 @@ const TrainerList: React.FC<Props> = () => {
     {
       dataIndex: "name",
       key: "name",
-      title: "Trainer's Name",
+      title: "Name",
     },
     {
       dataIndex: "rank",

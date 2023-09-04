@@ -10,4 +10,9 @@ const GlobalStyle = createGlobalStyle`
  } 
 `;
 
+export const theme = {
+  desktopSize: "1280px",
+  tabletSize: "768px",
+};
+
 export default GlobalStyle;

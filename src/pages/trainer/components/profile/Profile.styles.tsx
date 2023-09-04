@@ -2,11 +2,15 @@ import styled from "styled-components";
 
 export const ProfileContainer = styled.div`
   width: 30%;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   padding: 0 40px;
   gap: 20px;
+
+  @media (min-width: ${(props) => props.theme.tabletSize}) {
+    display: flex;
+  }
 `;
 
 export const ProfileName = styled.h3`

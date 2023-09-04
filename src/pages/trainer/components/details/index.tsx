@@ -10,7 +10,10 @@ import {
   Header,
   HeaderWrapper,
   Line,
+  Name,
   PokemonWrapper,
+  Rank,
+  TrainerWrapper,
 } from "./Details.styles";
 
 type Props = {
@@ -23,7 +26,7 @@ const Details: React.FC<Props> = ({ setBoolToTrue, trainer }) => {
 
   const { contextHolder, openMessage } = useMessage();
 
-  const { pokemon } = trainer;
+  const { name, pokemon, rank } = trainer;
 
   const goBackToHomePage = (): void => navigate("/");
 
@@ -32,6 +35,10 @@ const Details: React.FC<Props> = ({ setBoolToTrue, trainer }) => {
   return (
     <DetailsContainer>
       {contextHolder}
+      <TrainerWrapper>
+        <Name>{name}</Name>
+        <Rank>{rank}</Rank>
+      </TrainerWrapper>
       <HeaderWrapper>
         <Header>Pokémon Lineup</Header>
         <Button onClick={goBackToHomePage} type="primary">
