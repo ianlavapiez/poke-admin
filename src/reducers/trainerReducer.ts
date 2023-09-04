@@ -1,5 +1,5 @@
-import { checkIfPokemonQuantityExceeds, sampleData } from "utils/validation";
 import { v4 } from "uuid";
+import { checkIfPokemonQuantityExceeds } from "utils/validation";
 
 export const trainerInitialState: ApplicationState = {
   pokemonForm: {
@@ -14,7 +14,7 @@ export const trainerInitialState: ApplicationState = {
     rank: "Beginner",
     pokemon: [],
   },
-  trainers: sampleData,
+  trainers: [],
   isSimulationStarted: false,
 };
 
