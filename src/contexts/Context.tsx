@@ -7,6 +7,7 @@ import {
 import { createContext } from "./createContext";
 
 type TrainerContextState = {
+  pokemonForm: PokemonForm;
   selectedTrainer: Trainer;
   trainers: Trainer[];
 };
@@ -24,14 +25,16 @@ export const useActionContext = useTrainerActionContext;
 export const useContext = useTrainerContext;
 
 export const TrainerProvider = ({ children }: PropsWithChildren) => {
-  const [{ selectedTrainer, trainers }, dispatch] = useReducer(
+  const [{ pokemonForm, selectedTrainer, trainers }, dispatch] = useReducer(
     trainerReducer,
     trainerInitialState
   );
 
   return (
     <TrainerActionContextProvider value={{ dispatch }}>
-      <TrainerContextProvider value={{ selectedTrainer, trainers }}>
+      <TrainerContextProvider
+        value={{ pokemonForm, selectedTrainer, trainers }}
+      >
         {children}
       </TrainerContextProvider>
     </TrainerActionContextProvider>

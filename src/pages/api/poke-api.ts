@@ -36,7 +36,11 @@ export const getPokemonDetails = async (id: string, name: string) => {
     if (response.ok) {
       const fetchedPokemon: Pokemon = await response.json();
 
-      const updateFetchedPokemon = { ...fetchedPokemon, nickname: name };
+      const updateFetchedPokemon = {
+        ...fetchedPokemon,
+        pokedexId: id,
+        nickname: name,
+      };
 
       return updateFetchedPokemon;
     }

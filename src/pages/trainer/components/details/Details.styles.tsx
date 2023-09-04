@@ -31,5 +31,8 @@ export const Line = styled.hr`
 export const PokemonWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 5px;
+  margin-top: 10px;
+  height: auto;
+  overflow: scroll;
 `;

@@ -9,6 +9,7 @@ import { useBoolean } from "hooks";
 import { OpenMessageType } from "hooks/useMessage";
 import { getPokemon, getPokemonDetails } from "pages/api/poke-api";
 import { SubmitButton } from "./PokemonModal.styles";
+import { checkIfPokemonQuantityExceeds } from "utils/validation";
 
 type Props = ModalProps & {
   close: () => void;
@@ -25,7 +26,7 @@ const PokemonModal: React.FC<Props> = ({
   const { bool, setBoolToFalse, setBoolToTrue } = useBoolean();
 
   const { dispatch } = useActionContext();
-  const { selectedTrainer, trainers } = useContext();
+  const { pokemonForm, selectedTrainer, trainers } = useContext();
 
   useEffect(() => {
     let unsubscribed = false;
@@ -44,6 +45,13 @@ const PokemonModal: React.FC<Props> = ({
   const onFinish = async (values: { name: string; pokemonId: string }) => {
     const { name, pokemonId } = values;
 
+    if (checkIfPokemonQuantityExceeds(selectedTrainer.pokemon)) {
+      return openMessage({
+        type: "info",
+        text: "Uh-oh! You have exceeded the maximum pokemon set (6).",
+      });
+    }
+
     setBoolToTrue();
 
     const pokemonDetails: Pokemon | undefined = await getPokemonDetails(
@@ -61,11 +69,21 @@ const PokemonModal: React.FC<Props> = ({
             pokemon: pokemonDetails,
             trainer: selectedTrainer,
             trainers,
+            id: pokemonForm.pokemonId ? pokemonForm.pokemonId : undefined,
           },
         },
       });
 
       close();
+
+      dispatch({
+        type: "UPDATE_POKEMON_ID",
+        payload: {
+          pokedexId: "",
+          pokemonId: "",
+          name: "",
+        },
+      });
 
       return openMessage({
         type: "success",
@@ -87,7 +105,14 @@ const PokemonModal: React.FC<Props> = ({
       title="Pokémon Registration"
       {...modalProps}
     >
-      <Form layout="vertical" onFinish={onFinish}>
+      <Form
+        initialValues={{
+          name: pokemonForm.name ? pokemonForm.name : "",
+          pokemonId: pokemonForm.pokedexId ? pokemonForm.pokedexId : "",
+        }}
+        layout="vertical"
+        onFinish={onFinish}
+      >
         <FormItem
           label="Pokémon's Name"
           name="name"
@@ -106,7 +131,7 @@ const PokemonModal: React.FC<Props> = ({
         </FormItem>
         <FormItem>
           <SubmitButton htmlType="submit" loading={bool} type="primary">
-            Register Pokémon
+            Add Pokémon
           </SubmitButton>
         </FormItem>
       </Form>

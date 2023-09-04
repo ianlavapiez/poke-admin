@@ -1,6 +1,6 @@
 import Details from "./details";
-import PokemonList from "./pokemon-list";
+import PokemonCard from "./pokemon-card";
 import PokemonModal from "./pokemon-modal";
 import Profile from "./profile";
 
-export { Details, PokemonList, PokemonModal, Profile };
+export { Details, PokemonCard, PokemonModal, Profile };

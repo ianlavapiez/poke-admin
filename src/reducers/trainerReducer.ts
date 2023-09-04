@@ -2,6 +2,11 @@ import { checkIfPokemonQuantityExceeds } from "utils/validation";
 import { v4 } from "uuid";
 
 export const trainerInitialState: ApplicationState = {
+  pokemonForm: {
+    pokemonId: "",
+    pokedexId: "",
+    name: "",
+  },
   selectedTrainer: {
     id: "",
     name: "",
@@ -19,7 +24,17 @@ type AddPokemonAction = {
       trainer: Trainer;
       trainers: Trainer[];
       pokemon: Pokemon;
+      id?: string;
     };
+  };
+};
+
+type UpdatePokemonId = {
+  type: "UPDATE_POKEMON_ID";
+  payload: {
+    pokemonId: string;
+    pokedexId: string;
+    name: string;
   };
 };
 
@@ -44,7 +59,8 @@ type GetTrainerAction = {
 const addPokemon = (
   trainer: Trainer,
   trainers: Trainer[],
-  pokemon: Pokemon
+  pokemon: Pokemon,
+  id?: string
 ): { trainer: Trainer; trainers: Trainer[] } => {
   const pokemonId = v4();
   const { id: trainerId, pokemon: currentPokemon } = trainer;
@@ -56,9 +72,24 @@ const addPokemon = (
     };
   }
 
-  const pokemonWithId = { ...pokemon, id: pokemonId };
-  const updatePokemonSet = [...currentPokemon, pokemonWithId];
-  const updateTrainer = { ...trainer, pokemon: updatePokemonSet };
+  let pokemonWithId: Pokemon;
+  let pokemonSet: Pokemon[];
+
+  if (id !== undefined) {
+    pokemonWithId = { ...pokemon, id };
+    pokemonSet = currentPokemon.map((pokemon) => {
+      if (pokemon.id === id) {
+        return pokemonWithId;
+      }
+
+      return pokemon;
+    });
+  } else {
+    pokemonWithId = { ...pokemon, id: pokemonId };
+    pokemonSet = [...currentPokemon, pokemonWithId];
+  }
+
+  const updateTrainer = { ...trainer, pokemon: pokemonSet };
 
   const filterTrainerList = trainers.filter(({ id }) => id !== trainerId);
 
@@ -90,7 +121,8 @@ export type TrainerActions =
   | AddPokemonAction
   | CreateTrainerAction
   | FetchAllTrainersAction
-  | GetTrainerAction;
+  | GetTrainerAction
+  | UpdatePokemonId;
 
 export const trainerReducer = (
   state: ApplicationState = trainerInitialState,
@@ -102,12 +134,14 @@ export const trainerReducer = (
         pokemon,
         trainer: payloadTrainer,
         trainers: payloadTrainers,
+        id,
       } = action.payload.data;
 
       const { trainer, trainers } = addPokemon(
         payloadTrainer,
         payloadTrainers,
-        pokemon
+        pokemon,
+        id
       );
 
       return {
@@ -115,6 +149,16 @@ export const trainerReducer = (
         trainers,
         selectedTrainer: trainer,
       };
+    case "UPDATE_POKEMON_ID": {
+      return {
+        ...state,
+        pokemonForm: {
+          pokemonId: action.payload.pokemonId,
+          pokedexId: action.payload.pokedexId,
+          name: action.payload.name,
+        },
+      };
+    }
     case "CREATE_TRAINER":
       const newTrainer = createTrainer(action.payload.data);
 

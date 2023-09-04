@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "antd/es/button";
 import { useNavigate } from "react-router-dom";
+import { PokemonCard } from "..";
 import {
   AddButton,
   DetailsContainer,
@@ -9,6 +10,7 @@ import {
   Line,
   PokemonWrapper,
 } from "./Details.styles";
+import { checkIfPokemonQuantityExceeds } from "utils/validation";
 
 type Props = {
   setBoolToTrue: () => void;
@@ -22,7 +24,7 @@ const Details: React.FC<Props> = ({ setBoolToTrue, trainer }) => {
 
   const goBackToHomePage = (): void => navigate("/");
 
-  console.log(pokemon);
+  const isExceeds = checkIfPokemonQuantityExceeds(pokemon);
 
   return (
     <DetailsContainer>
@@ -33,17 +35,19 @@ const Details: React.FC<Props> = ({ setBoolToTrue, trainer }) => {
         </Button>
       </HeaderWrapper>
       <Line />
-      <AddButton onClick={setBoolToTrue} type="primary">
-        Add Pokémon
-      </AddButton>
+      {!isExceeds && (
+        <AddButton onClick={setBoolToTrue} type="primary">
+          Add Pokémon
+        </AddButton>
+      )}
       <PokemonWrapper>
-        {pokemon.map(({ id, nickname }) => {
-          return (
-            <p style={{ color: "white" }} key={id}>
-              {nickname}
-            </p>
-          );
-        })}
+        {pokemon.map((pokemon) => (
+          <PokemonCard
+            key={pokemon.id}
+            open={setBoolToTrue}
+            pokemon={pokemon}
+          />
+        ))}
       </PokemonWrapper>
     </DetailsContainer>
   );

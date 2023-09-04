@@ -1,4 +1,5 @@
 type ApplicationState = {
+  pokemonForm: PokemonForm;
   selectedTrainer: Trainer;
   trainers: Trainer[];
 };
@@ -8,29 +9,7 @@ type Options = {
   value: string;
 };
 
-type Pokemon = {
-  id: string;
-  baseExperience: number;
-  height: number;
-  name: string;
-  nickname: string;
-  weight: number;
-};
-
-type PokemonList = {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: PokemonResults[];
-};
-
-type PokemonResults = {
-  name: string;
-  url: string;
-};
-
-type PokemonRegistration = Pick<Pokemon, "id", "name">;
-
+/** Trainer Types */
 type Trainer = {
   id: string;
   gender: string;
@@ -48,3 +27,38 @@ type Rankings =
   | "Master";
 type TrainerTable = Pick<Trainer, "id" | "name" | "rank">;
 type TrainerWithoutIdAndPokemon = Omit<Trainer, "id" | "pokemon">;
+
+/** Pokemon Types */
+type Pokemon = {
+  id: string;
+  base_experience: number;
+  height: number;
+  name: string;
+  nickname: string;
+  weight: number;
+  order: number;
+  pokedexId: string;
+  sprites: Sprites;
+};
+
+type Sprites = {
+  front_default: string;
+};
+
+type PokemonList = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: PokemonResults[];
+};
+
+type PokemonResults = {
+  name: string;
+  url: string;
+};
+
+type PokemonForm = {
+  pokemonId: string;
+  pokedexId: string;
+  name: string;
+};
