@@ -2,6 +2,10 @@
 
 A web app that allows you to have trainers with their desired pokémons!
 
+## Demo
+
+Click [here](https://poke-admin.web.app/).
+
 ## Running the App
 
 After cloning the project, install first the dependencies.
