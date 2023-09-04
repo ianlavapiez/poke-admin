@@ -25,9 +25,7 @@ const TrainerPage: React.FC<Props> = () => {
         },
       });
     }
-  }, [id]);
-
-  console.log("selectedTrainer", selectedTrainer);
+  }, [id, dispatch]);
 
   return (
     <TrainerContainer>
