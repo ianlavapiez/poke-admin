@@ -2,7 +2,11 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import Button from "antd/es/button";
 import Input from "antd/es/input";
 import Spin from "antd/es/spin";
-import { TrainerList, TrainerRegistrationModal } from "./components";
+import {
+  TrainerList,
+  TrainerRegistrationModal,
+  WinnerModal,
+} from "./components";
 import {
   BattleText,
   ButtonWrapper,
@@ -25,6 +29,11 @@ const HomePage: React.FC<Props> = () => {
   const { dispatch } = useActionContext();
 
   const { bool, setBoolToFalse, setBoolToTrue } = useBoolean();
+  const {
+    bool: winnerBool,
+    setBoolToFalse: winnerBoolToFalse,
+    setBoolToTrue: winnerBoolToTrue,
+  } = useBoolean();
   const { contextHolder, openMessage } = useMessage();
 
   useEffect(() => {
@@ -70,6 +79,8 @@ const HomePage: React.FC<Props> = () => {
             isStarted: false,
           },
         });
+
+        winnerBoolToTrue();
 
         openMessage({
           type: "success",
@@ -118,6 +129,7 @@ const HomePage: React.FC<Props> = () => {
         open={bool}
         openMessage={openMessage}
       />
+      <WinnerModal close={winnerBoolToFalse} open={winnerBool} />
     </HomeContainer>
   );
 };
