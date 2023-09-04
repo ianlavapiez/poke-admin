@@ -1,11 +1,14 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import Button from "antd/es/button";
 import Input from "antd/es/input";
+import Spin from "antd/es/spin";
 import { TrainerList, TrainerRegistrationModal } from "./components";
 import {
+  BattleText,
   ButtonWrapper,
   ControlsWrapper,
   HomeContainer,
+  LoadingWrapper,
   Title,
 } from "./Home.styles";
 import { useBoolean, useMessage } from "hooks";
@@ -38,24 +41,6 @@ const HomePage: React.FC<Props> = () => {
     }
   }, [searchText, trainers]);
 
-  useEffect(() => {
-    if (isSimulationStarted) {
-      setTimeout(() => {
-        dispatch({
-          type: "UPDATE_SIMULATION",
-          payload: {
-            isStarted: false,
-          },
-        });
-
-        openMessage({
-          type: "success",
-          text: "Battle simulation finished!",
-        });
-      }, 5000);
-    }
-  }, []);
-
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
@@ -77,6 +62,20 @@ const HomePage: React.FC<Props> = () => {
           isStarted: hasStarted,
         },
       });
+
+      setTimeout(() => {
+        dispatch({
+          type: "UPDATE_SIMULATION",
+          payload: {
+            isStarted: false,
+          },
+        });
+
+        openMessage({
+          type: "success",
+          text: "Battle simulation finished!",
+        });
+      }, 5000);
 
       return openMessage({
         type: "success",
@@ -107,6 +106,12 @@ const HomePage: React.FC<Props> = () => {
           </Button>
         </ButtonWrapper>
       </ControlsWrapper>
+      {isSimulationStarted && (
+        <LoadingWrapper>
+          <Spin size="small" />
+          <BattleText>Battle in progress...</BattleText>
+        </LoadingWrapper>
+      )}
       <TrainerList openMessage={openMessage} trainers={filteredTrainers} />
       <TrainerRegistrationModal
         close={setBoolToFalse}

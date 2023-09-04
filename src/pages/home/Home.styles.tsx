@@ -1,5 +1,22 @@
 import styled from "styled-components";
 
+export const BattleText = styled.h4`
+  font-size: 20px;
+  line-height: 30px;
+  color: black;
+  text-align: center;
+
+  @media (min-width: ${(props) => props.theme.tabletSize}) {
+    font-size: 14px;
+    line-height: 28px;
+  }
+
+  @media (min-width: ${(props) => props.theme.desktopSize}) {
+    font-size: 20px;
+    line-height: 30px;
+  }
+`;
+
 export const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -21,6 +38,14 @@ export const ControlsWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
   }
+`;
+
+export const LoadingWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 `;
 
 export const HomeContainer = styled.div`
