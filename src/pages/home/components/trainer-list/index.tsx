@@ -2,15 +2,20 @@ import React, { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import Table from "antd/es/table";
 import type { ColumnsType } from "antd/es/table";
-import { TrainerListContainer } from "./TrainerList.styles";
 import { RankTag } from "common";
 import { useContext } from "contexts/Context";
+import { OpenMessageType } from "hooks/useMessage";
+import { TrainerListContainer } from "./TrainerList.styles";
 
-type Props = {};
+type Props = {
+  openMessage: ({ type, text }: OpenMessageType) => void;
+  trainers: Trainer[];
+};
 
-const TrainerList: React.FC<Props> = () => {
+const TrainerList: React.FC<Props> = ({ openMessage, trainers }) => {
   const navigate = useNavigate();
-  const { trainers } = useContext();
+
+  const { isSimulationStarted } = useContext();
 
   const columns: ColumnsType<Trainer> = [
     {
@@ -41,7 +46,13 @@ const TrainerList: React.FC<Props> = () => {
             style: {
               cursor: "pointer",
             },
-            onClick: () => navigate(`/trainer/${id}`),
+            onClick: isSimulationStarted
+              ? () =>
+                  openMessage({
+                    type: "info",
+                    text: `Cannot redirect you to the trainer's page as of this moment.`,
+                  })
+              : () => navigate(`/trainer/${id}`),
           };
         }}
         rowKey="id"

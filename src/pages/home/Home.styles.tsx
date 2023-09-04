@@ -36,4 +36,14 @@ export const Title = styled.h1`
   line-height: 40px;
   color: black;
   text-align: center;
+
+  @media (min-width: ${(props) => props.theme.tabletSize}) {
+    font-size: 16px;
+    line-height: 28px;
+  }
+
+  @media (min-width: ${(props) => props.theme.desktopSize}) {
+    font-size: 30px;
+    line-height: 40px;
+  }
 `;

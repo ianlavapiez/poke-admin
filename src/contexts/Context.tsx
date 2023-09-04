@@ -10,6 +10,7 @@ type TrainerContextState = {
   pokemonForm: PokemonForm;
   selectedTrainer: Trainer;
   trainers: Trainer[];
+  isSimulationStarted: boolean;
 };
 
 type TrainerContextActions = {
@@ -25,15 +26,15 @@ export const useActionContext = useTrainerActionContext;
 export const useContext = useTrainerContext;
 
 export const TrainerProvider = ({ children }: PropsWithChildren) => {
-  const [{ pokemonForm, selectedTrainer, trainers }, dispatch] = useReducer(
-    trainerReducer,
-    trainerInitialState
-  );
+  const [
+    { isSimulationStarted, pokemonForm, selectedTrainer, trainers },
+    dispatch,
+  ] = useReducer(trainerReducer, trainerInitialState);
 
   return (
     <TrainerActionContextProvider value={{ dispatch }}>
       <TrainerContextProvider
-        value={{ pokemonForm, selectedTrainer, trainers }}
+        value={{ isSimulationStarted, pokemonForm, selectedTrainer, trainers }}
       >
         {children}
       </TrainerContextProvider>

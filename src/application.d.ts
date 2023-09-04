@@ -2,6 +2,7 @@ type ApplicationState = {
   pokemonForm: PokemonForm;
   selectedTrainer: Trainer;
   trainers: Trainer[];
+  isSimulationStarted: boolean;
 };
 
 type Options = {

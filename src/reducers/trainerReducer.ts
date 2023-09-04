@@ -15,6 +15,7 @@ export const trainerInitialState: ApplicationState = {
     pokemon: [],
   },
   trainers: [],
+  isSimulationStarted: false,
 };
 
 type AddPokemonAction = {
@@ -64,6 +65,13 @@ type GetTrainerAction = {
   type: "GET_TRAINER";
   payload: {
     id: string;
+  };
+};
+
+type UpdateSimulationAction = {
+  type: "UPDATE_SIMULATION";
+  payload: {
+    isStarted: boolean;
   };
 };
 
@@ -155,7 +163,8 @@ export type TrainerActions =
   | DeletePokemonAction
   | FetchAllTrainersAction
   | GetTrainerAction
-  | UpdatePokemonId;
+  | UpdatePokemonId
+  | UpdateSimulationAction;
 
 export const trainerReducer = (
   state: ApplicationState = trainerInitialState,
@@ -182,6 +191,12 @@ export const trainerReducer = (
         trainers,
         selectedTrainer: trainer,
       };
+    case "UPDATE_SIMULATION": {
+      return {
+        ...state,
+        isSimulationStarted: action.payload.isStarted,
+      };
+    }
     case "DELETE_POKEMON": {
       const {
         id,
