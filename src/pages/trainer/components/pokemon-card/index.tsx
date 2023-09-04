@@ -1,5 +1,9 @@
 import React from "react";
 import Button from "antd/es/button";
+import Popconfirm from "antd/es/popconfirm";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { useActionContext, useContext } from "contexts/Context";
+import { OpenMessageType } from "hooks/useMessage";
 import {
   ActionsWrapper,
   Avatar,
@@ -11,16 +15,16 @@ import {
   PokemonCardContainer,
   Title,
 } from "./PokemonCard.styles";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { useActionContext } from "contexts/Context";
 
 type Props = {
   open: () => void;
+  openMessage: ({ type, text }: OpenMessageType) => void;
   pokemon: Pokemon;
 };
 
-const PokemonCard: React.FC<Props> = ({ open, pokemon }) => {
+const PokemonCard: React.FC<Props> = ({ open, openMessage, pokemon }) => {
   const { dispatch } = useActionContext();
+  const { selectedTrainer, trainers } = useContext();
 
   const {
     id,
@@ -45,6 +49,24 @@ const PokemonCard: React.FC<Props> = ({ open, pokemon }) => {
     });
 
     open();
+  };
+
+  const onDeletePokemon = (): void => {
+    dispatch({
+      type: "DELETE_POKEMON",
+      payload: {
+        data: {
+          id,
+          trainer: selectedTrainer,
+          trainers,
+        },
+      },
+    });
+
+    openMessage({
+      type: "success",
+      text: "Successfully removed the selected pokémon.",
+    });
   };
 
   return (
@@ -80,12 +102,19 @@ const PokemonCard: React.FC<Props> = ({ open, pokemon }) => {
           shape="circle"
           type="primary"
         />
-        <Button
-          danger
-          icon={<DeleteOutlined />}
-          shape="circle"
-          type="primary"
-        />
+        <Popconfirm
+          title="Delete Pokémon"
+          description="Are you sure you want to delete this pokemon on your set?"
+          okText="Yes"
+          onConfirm={onDeletePokemon}
+        >
+          <Button
+            danger
+            icon={<DeleteOutlined />}
+            shape="circle"
+            type="primary"
+          />
+        </Popconfirm>
       </ActionsWrapper>
     </PokemonCardContainer>
   );

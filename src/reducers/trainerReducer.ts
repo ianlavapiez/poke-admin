@@ -29,6 +29,17 @@ type AddPokemonAction = {
   };
 };
 
+type DeletePokemonAction = {
+  type: "DELETE_POKEMON";
+  payload: {
+    data: {
+      id: string;
+      trainer: Trainer;
+      trainers: Trainer[];
+    };
+  };
+};
+
 type UpdatePokemonId = {
   type: "UPDATE_POKEMON_ID";
   payload: {
@@ -101,6 +112,27 @@ const addPokemon = (
   };
 };
 
+const deletePokemonFromTrainer = (
+  id: string,
+  trainer: Trainer,
+  trainers: Trainer[]
+): { trainer: Trainer; trainers: Trainer[] } => {
+  const filteredPokemon = trainer.pokemon.filter(
+    (pokemon) => pokemon.id !== id
+  );
+
+  const updateTrainer = { ...trainer, pokemon: filteredPokemon };
+
+  const filterTrainerList = trainers.filter(({ id }) => id !== trainer.id);
+
+  filterTrainerList.push(updateTrainer);
+
+  return {
+    trainer: updateTrainer,
+    trainers: filterTrainerList,
+  };
+};
+
 const createTrainer = (data: TrainerWithoutIdAndPokemon): Trainer => {
   const id = v4();
 
@@ -120,6 +152,7 @@ const getTrainer = (trainers: Trainer[], trainerId: string) => {
 export type TrainerActions =
   | AddPokemonAction
   | CreateTrainerAction
+  | DeletePokemonAction
   | FetchAllTrainersAction
   | GetTrainerAction
   | UpdatePokemonId;
@@ -149,6 +182,25 @@ export const trainerReducer = (
         trainers,
         selectedTrainer: trainer,
       };
+    case "DELETE_POKEMON": {
+      const {
+        id,
+        trainer: payloadTrainer,
+        trainers: payloadTrainers,
+      } = action.payload.data;
+
+      const { trainer, trainers } = deletePokemonFromTrainer(
+        id,
+        payloadTrainer,
+        payloadTrainers
+      );
+
+      return {
+        ...state,
+        trainers,
+        selectedTrainer: trainer,
+      };
+    }
     case "UPDATE_POKEMON_ID": {
       return {
         ...state,

@@ -1,6 +1,8 @@
 import React from "react";
 import Button from "antd/es/button";
 import { useNavigate } from "react-router-dom";
+import { useMessage } from "hooks";
+import { checkIfPokemonQuantityExceeds } from "utils/validation";
 import { PokemonCard } from "..";
 import {
   AddButton,
@@ -10,7 +12,6 @@ import {
   Line,
   PokemonWrapper,
 } from "./Details.styles";
-import { checkIfPokemonQuantityExceeds } from "utils/validation";
 
 type Props = {
   setBoolToTrue: () => void;
@@ -20,6 +21,8 @@ type Props = {
 const Details: React.FC<Props> = ({ setBoolToTrue, trainer }) => {
   const navigate = useNavigate();
 
+  const { contextHolder, openMessage } = useMessage();
+
   const { pokemon } = trainer;
 
   const goBackToHomePage = (): void => navigate("/");
@@ -28,6 +31,7 @@ const Details: React.FC<Props> = ({ setBoolToTrue, trainer }) => {
 
   return (
     <DetailsContainer>
+      {contextHolder}
       <HeaderWrapper>
         <Header>Pokémon Lineup</Header>
         <Button onClick={goBackToHomePage} type="primary">
@@ -45,6 +49,7 @@ const Details: React.FC<Props> = ({ setBoolToTrue, trainer }) => {
           <PokemonCard
             key={pokemon.id}
             open={setBoolToTrue}
+            openMessage={openMessage}
             pokemon={pokemon}
           />
         ))}
