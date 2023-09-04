@@ -1,4 +1,5 @@
 type ApplicationState = {
+  selectedTrainer: Trainer;
   trainers: Trainer[];
 };
 
@@ -8,11 +9,11 @@ type Options = {
 };
 
 type Pokemon = {
-  id: number;
+  id: string;
   baseExperience: number;
   height: number;
   name: string;
-  pokemonName: string;
+  nickname: string;
   weight: number;
 };
 

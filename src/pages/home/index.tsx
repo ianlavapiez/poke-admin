@@ -21,9 +21,9 @@ const HomePage: React.FC<Props> = () => {
       </ControlsWrapper>
       <TrainerList />
       <TrainerRegistrationModal
+        close={setBoolToFalse}
         open={bool}
         openMessage={openMessage}
-        setBoolToFalse={setBoolToFalse}
       />
     </HomeContainer>
   );

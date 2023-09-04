@@ -7,16 +7,22 @@ import {
   Header,
   HeaderWrapper,
   Line,
+  PokemonWrapper,
 } from "./Details.styles";
 
 type Props = {
   setBoolToTrue: () => void;
+  trainer: Trainer;
 };
 
-const Details: React.FC<Props> = ({ setBoolToTrue }) => {
+const Details: React.FC<Props> = ({ setBoolToTrue, trainer }) => {
   const navigate = useNavigate();
 
+  const { pokemon } = trainer;
+
   const goBackToHomePage = (): void => navigate("/");
+
+  console.log(pokemon);
 
   return (
     <DetailsContainer>
@@ -30,6 +36,15 @@ const Details: React.FC<Props> = ({ setBoolToTrue }) => {
       <AddButton onClick={setBoolToTrue} type="primary">
         Add Pokémon
       </AddButton>
+      <PokemonWrapper>
+        {pokemon.map(({ id, nickname }) => {
+          return (
+            <p style={{ color: "white" }} key={id}>
+              {nickname}
+            </p>
+          );
+        })}
+      </PokemonWrapper>
     </DetailsContainer>
   );
 };

@@ -23,6 +23,26 @@ export const getPokemon = async () => {
       return pokemonOptions;
     }
   } catch (err) {
-    console.error(err);
+    console.error("Something went wrong.");
+  }
+};
+
+export const getPokemonDetails = async (id: string, name: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.REACT_APP_POKEAPI_BASE_URL}pokemon/${id}`
+    );
+
+    if (response.ok) {
+      const fetchedPokemon: Pokemon = await response.json();
+
+      const updateFetchedPokemon = { ...fetchedPokemon, nickname: name };
+
+      return updateFetchedPokemon;
+    }
+
+    return undefined;
+  } catch (err) {
+    console.error("Something went wrong.");
   }
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import FemaleImg from "assets/female.webp";
-// import MaleImg from "assets/male.webp";
+import MaleImg from "assets/male.webp";
 import {
   ProfileContainer,
   ProfileName,
@@ -8,14 +8,21 @@ import {
   Rank,
 } from "./Profile.styles";
 
-type Props = {};
+type Props = {
+  trainer: Trainer;
+};
 
-const Profile: React.FC<Props> = () => {
+const Profile: React.FC<Props> = ({ trainer }) => {
+  const { gender, name, rank } = trainer || {};
+
   return (
     <ProfileContainer>
-      <ProfilePicture alt="profile" src={FemaleImg} />
-      <ProfileName>Athelia Aethos</ProfileName>
-      <Rank>Master</Rank>
+      <ProfilePicture
+        alt="profile"
+        src={gender === "Male" ? MaleImg : FemaleImg}
+      />
+      <ProfileName>{name}</ProfileName>
+      <Rank>{rank}</Rank>
     </ProfileContainer>
   );
 };

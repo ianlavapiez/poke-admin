@@ -11,8 +11,9 @@ export const ProfileContainer = styled.div`
 
 export const ProfileName = styled.h3`
   font-size: 30px;
-  line-height: 27px;
+  line-height: 45px;
   color: white;
+  text-align: center;
 `;
 
 export const ProfilePicture = styled.img`

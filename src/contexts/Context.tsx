@@ -7,6 +7,7 @@ import {
 import { createContext } from "./createContext";
 
 type TrainerContextState = {
+  selectedTrainer: Trainer;
   trainers: Trainer[];
 };
 
@@ -23,14 +24,14 @@ export const useActionContext = useTrainerActionContext;
 export const useContext = useTrainerContext;
 
 export const TrainerProvider = ({ children }: PropsWithChildren) => {
-  const [{ trainers }, dispatch] = useReducer(
+  const [{ selectedTrainer, trainers }, dispatch] = useReducer(
     trainerReducer,
     trainerInitialState
   );
 
   return (
     <TrainerActionContextProvider value={{ dispatch }}>
-      <TrainerContextProvider value={{ trainers }}>
+      <TrainerContextProvider value={{ selectedTrainer, trainers }}>
         {children}
       </TrainerContextProvider>
     </TrainerActionContextProvider>

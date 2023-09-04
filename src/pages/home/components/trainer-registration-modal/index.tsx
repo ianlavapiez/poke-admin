@@ -12,12 +12,12 @@ import { SubmitButton } from "./TrainerRegistrationModal.styles";
 
 type Props = ModalProps & {
   openMessage: ({ type, text }: OpenMessageType) => void;
-  setBoolToFalse: () => void;
+  close: () => void;
 };
 
 const TrainerRegistrationModal: React.FC<Props> = ({
   openMessage,
-  setBoolToFalse,
+  close,
   ...modalProps
 }) => {
   const { dispatch } = useActionContext();
@@ -79,7 +79,7 @@ const TrainerRegistrationModal: React.FC<Props> = ({
       },
     });
 
-    setBoolToFalse();
+    close();
     openMessage({
       type: "success",
       text: "Successfully added new trainer.",
@@ -90,7 +90,7 @@ const TrainerRegistrationModal: React.FC<Props> = ({
     <Modal
       destroyOnClose={true}
       footer={null}
-      onCancel={setBoolToFalse}
+      onCancel={close}
       title="Trainer's Registration"
       {...modalProps}
     >

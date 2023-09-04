@@ -27,3 +27,9 @@ export const HeaderWrapper = styled.div`
 export const Line = styled.hr`
   margin: 20px 0;
 `;
+
+export const PokemonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
