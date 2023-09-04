@@ -5,13 +5,23 @@ import Modal, { ModalProps } from "antd/es/modal";
 import Select from "antd/es/select";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { FormItem } from "common";
-import { useActionContext } from "contexts/Context";
+import { useActionContext, useContext } from "contexts/Context";
+import { OpenMessageType } from "hooks/useMessage";
+import { checkIfNameExists } from "utils/validation";
 import { SubmitButton } from "./TrainerRegistrationModal.styles";
 
-type Props = ModalProps & {};
+type Props = ModalProps & {
+  openMessage: ({ type, text }: OpenMessageType) => void;
+  setBoolToFalse: () => void;
+};
 
-const TrainerRegistrationModal: React.FC<Props> = ({ ...modalProps }) => {
+const TrainerRegistrationModal: React.FC<Props> = ({
+  openMessage,
+  setBoolToFalse,
+  ...modalProps
+}) => {
   const { dispatch } = useActionContext();
+  const { trainers } = useContext();
 
   const genderOptions: Options[] = [
     {
@@ -52,6 +62,14 @@ const TrainerRegistrationModal: React.FC<Props> = ({ ...modalProps }) => {
   ];
 
   const onFinish = (values: TrainerWithoutIdAndPokemon) => {
+    const hasExistingName = checkIfNameExists(trainers, values.name);
+
+    if (hasExistingName)
+      return openMessage({
+        type: "error",
+        text: "Trainer name already exists.",
+      });
+
     dispatch({
       type: "CREATE_TRAINER",
       payload: {
@@ -60,12 +78,19 @@ const TrainerRegistrationModal: React.FC<Props> = ({ ...modalProps }) => {
         },
       },
     });
+
+    setBoolToFalse();
+    openMessage({
+      type: "success",
+      text: "Successfully added new trainer.",
+    });
   };
 
   return (
     <Modal
       destroyOnClose={true}
       footer={null}
+      onCancel={setBoolToFalse}
       title="Trainer's Registration"
       {...modalProps}
     >

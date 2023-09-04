@@ -1,3 +1,4 @@
 import useBoolean from "./useBoolean";
+import useMessage from "./useMessage";
 
-export { useBoolean };
+export { useBoolean, useMessage };
