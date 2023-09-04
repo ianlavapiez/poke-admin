@@ -57,10 +57,9 @@ const addPokemon = (
   }
 
   const pokemonWithId = { ...pokemon, id: pokemonId };
+  const updatePokemonSet = [...currentPokemon, pokemonWithId];
+  const updateTrainer = { ...trainer, pokemon: updatePokemonSet };
 
-  currentPokemon.push(pokemonWithId);
-
-  const updateTrainer = { ...trainer, pokemon: currentPokemon };
   const filterTrainerList = trainers.filter(({ id }) => id !== trainerId);
 
   filterTrainerList.push(updateTrainer);
